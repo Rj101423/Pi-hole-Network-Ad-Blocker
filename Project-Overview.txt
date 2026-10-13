@@ -1,0 +1,812 @@
+AD-BLOCKER PROJECT
+
+Project Name:
+Self-Hosted Network Ad & Tracker Blocker
+
+Purpose:
+The purpose of this project is to create a functional, self-hosted ad and tracker blocking solution while developing practical IT skills in networking, DNS, Linux system administration, network security, remote server administration, Bash scripting, troubleshooting, and technical documentation.
+
+Project Goal:
+Build and configure a self-hosted network ad and tracker blocking system using an older Toshiba laptop. Install Ubuntu Server and Pi-hole to provide DNS-based filtering for devices connected to the local network. Configure SSH for remote server administration and a UFW firewall to secure network traffic. Develop a Bash script to monitor server performance and verify the status of important services. Test and troubleshoot the system to ensure proper connectivity, DNS resolution, ad blocking, and server functionality while documenting the installation, configuration, troubleshooting, and testing processes.
+
+
+============================
+Initial System Environment:
+============================
+
+Operating System:
+Windows 10 Home
+
+Operating System Version:
+10.0.19045 Build 19045
+
+Python Version (Original Windows Environment):
+Python 3.14.0
+
+System Architecture:
+64-bit
+
+Project Status:
+Phase 1 - Initial Setup
+
+Date Started:
+10/5/2026
+
+
+======================
+Hardware Information:
+======================
+
+Manufacturer: 
+Toshiba 
+
+Model:
+Satellite C75D-B
+
+Processor: 
+AMD A6-6310 APU
+
+CPU Cores: 
+4
+
+RAM: 
+8 GB
+
+System Type: 
+64-bit
+
+BIOS Model: 
+Legacy
+
+Original Operating Software: 
+Windows 10 Home
+
+Storage:
+697 GB Total
+629 GB Free
+
+Power Status:
+Power Source: AC Power
+Battery: 100% Fully Charged
+Power Mode: Better Performance
+
+Network Connectivity:
+Ethernet Port: Available
+Wireless Networks: Available
+Ethernet Adapter: Detected
+Ethernet Status: Network Cable Unplugged
+Wireless Network: Available
+
+====================
+Initial Assessment:
+====================
+
+The laptop is an older 64-bit system with 8 GB of RAM and a 4-core AMD processor. The hardware is sufficient for use as a lightweight server. Because the installed operating system is Windows 10 Home and Windows 10 reached end of support in October 2025, the project will evaluate using a lightweight Linux distribution for the final server implementation.
+
+
+========================================
+SERVER OPERATING SYSTEM SELECTION
+========================================
+
+Selected Operating System:
+Ubuntu Server LTS
+
+Reason for Selection:
+Ubuntu Server was selected because it is a widely used Linux server operating system with strong community support and extensive documentation. It will provide hands-on experience with Linux administration, networking, DNS, services, permissions, and troubleshooting.
+
+Ubuntu Server will replace the laptop's current Windows 10 Home installation as part of the server deployment.
+
+Planned Ad-Blocking Software:
+AdGuard Home
+
+Reason for Selection:
+AdGuard Home will be used as the DNS-based ad and tracker blocking solution. It will allow the server to filter DNS requests and eventually provide ad and tracker blocking for devices connected to the local network.
+
+
+========================================
+INSTALLATION PREPARATION
+========================================
+
+Data Backup Assessment:
+No important personal or school files are stored on the laptop. The laptop can therefore be repurposed for the server project without requiring a personal data backup.
+
+Installation Media:
+A USB flash drive of at least 8 GB will be used to create the Ubuntu Server installation media.
+
+Network Connection:
+Ethernet will be used for the server's primary network connection because a wired connection provides a more stable connection for a continuously running DNS server.
+
+Power:
+The laptop will remain connected to AC power during installation and server operation.
+
+Operating System Installation Media:
+
+Operating System:
+Ubuntu Server 26.04.1 LTS
+
+Architecture:
+64-bit AMD64
+
+Installation Media:
+Bootable USB flash drive
+
+USB Capacity:
+256 GB
+
+
+=============================
+Baseline Network Assessment:
+=============================
+
+The laptop successfully connected to the local network over Wi-Fi.
+
+IPv4 Configuration:
+
+IPv4 Address: 
+[PRIVATE IP ADDRESS]
+
+Subnet Mask: 
+255.255.255.0
+
+Default Gateway: 
+192.168.1.1
+
+Connectivity Testing:
+
+Ping to 8.8.8.8: 
+Successful
+
+Packet Loss: 
+0%
+
+DNS/Internet Testing:
+
+Ping to google.com: 
+Successful
+
+Packet Loss: 
+0%
+
+Command Used:
+nslookup google.com
+
+Result:
+Successful
+
+The nslookup test successfully resolved google.com to its associated IP address. This confirms that DNS resolution is functioning correctly before the ad-blocking system is installed.
+
+The initial network tests confirm that the laptop has working network and Internet connectivity before the ad-blocking system is installed.
+
+
+========================================
+BOOTABLE USB CREATION
+========================================
+
+Tool Used:
+Rufus 4.15.2396 Portable
+
+Operating System Image:
+Ubuntu Server 26.04.1 LTS
+
+Architecture:
+64-bit AMD64
+
+USB Capacity:
+256 GB
+
+Partition Scheme:
+MBR
+
+Target System:
+BIOS (or UEFI-CSM)
+
+File System:
+FAT32
+
+Purpose:
+Created bootable installation media for deploying Ubuntu Server on the Toshiba Satellite C75D-B.
+
+Result:
+Bootable USB installation media was successfully created.
+
+
+========================================
+SERVER INSTALLATION
+========================================
+
+Boot Method:
+USB boot
+
+Installation Media:
+Ubuntu Server 26.04.1 LTS
+
+Boot Menu:
+Toshiba boot menu accessed using F12.
+
+Purpose:
+The laptop was configured to boot from the Ubuntu Server installation USB in preparation for replacing the existing Windows 10 Home operating system.
+
+Installation Start:
+
+The Toshiba Satellite C75D-B was successfully booted from the Ubuntu Server installation USB. The Ubuntu Server installer was launched using the "Try or install Ubuntu Server" option.
+
+Installation Progress:
+
+After successfully launching the Ubuntu Server installer, I proceeded through the installation process to configure the laptop as a Linux server. I configured the network connection, selected the installation disk, and created the server's administrator account.
+
+Installation Result:
+
+Ubuntu Server 26.04.1 LTS was successfully installed on the Toshiba laptop, allowing it to be repurposed as a dedicated Linux server for the ad-blocking project.
+
+
+========================================
+UBUNTU SERVER NETWORK CONFIGURATION
+========================================
+
+Network Interface:
+enp1s0
+
+Connection Type:
+Wired Ethernet
+
+Server IPv4 Address:
+192.168.1.211
+
+Subnet:
+255.255.255.0 (/24)
+
+Default Gateway:
+192.168.1.1
+
+Network Configuration:
+
+After installing Ubuntu Server, I configured the laptop's Ethernet connection so it could communicate with other devices on my local network. The server uses the IP address 192.168.1.211, which allows devices to connect to the server for DNS filtering and remote administration.
+
+Network Verification:
+
+I used Linux networking commands to verify the server's network configuration and confirm that it could communicate with the local network.
+
+Commands Used:
+- sudo netplan generate
+- ip route
+- ip neigh
+
+Result:
+
+The network configuration was successfully verified. The server was able to communicate with the local network through its Ethernet connection.
+
+Screenshot 14: Ubuntu Network Configuration Verification
+
+
+========================================
+PI-HOLE INSTALLATION AND CONFIGURATION
+========================================
+
+Ad-Blocking Software:
+Pi-hole
+
+Server Operating System:
+Ubuntu Server 26.04.1 LTS
+
+Server IP Address:
+192.168.1.211
+
+Purpose:
+
+Pi-hole was installed to provide DNS-based advertisement and tracker blocking for devices connected to my local network. Instead of relying on individual browser extensions, Pi-hole allows compatible devices to use the server as their DNS resolver.
+
+Software Selection:
+
+Although AdGuard Home was originally selected during the planning phase, Pi-hole was used for the final implementation.
+
+Installation Result:
+
+Pi-hole was successfully installed on the Ubuntu Server. The Pi-hole DNS service was verified to be running, with advertisement blocking enabled.
+
+Web Dashboard:
+
+http://192.168.1.211/admin
+
+The web dashboard provides an interface for monitoring DNS queries, reviewing blocked requests, and managing Pi-hole settings.
+
+
+========================================
+DEVICE DNS CONFIGURATION
+========================================
+
+DNS Server:
+192.168.1.211
+
+Router:
+Spectrum SBE1V1K
+
+Configuration Method:
+Manual DNS configuration on individual devices
+
+Network Configuration:
+
+After installing Pi-hole, I needed to configure my network devices to use the Ubuntu Server as their DNS server.
+
+My Spectrum router did not provide an option to change the network's DNS settings, so I manually configured the DNS settings on individual devices instead.
+
+Devices Configured:
+- Windows Computer 1
+- Windows Computer 2
+- iPhone
+- iPad
+- Samsung Smart TV
+- Samsung Galaxy Device 1
+- Samsung Galaxy Device 2
+
+Total Devices Configured:
+7
+
+Configuration Result:
+
+The devices were configured to send DNS requests to the Pi-hole server at 192.168.1.211. This allowed Pi-hole to filter supported DNS requests and block domains associated with advertisements and trackers.
+
+Troubleshooting:
+
+The router's DNS configuration limitations required an alternative approach. Manually assigning the Pi-hole server as the DNS resolver allowed me to implement ad blocking without replacing my existing router.
+
+
+========================================
+PI-HOLE TESTING AND VERIFICATION
+========================================
+
+Testing Purpose:
+
+After configuring the devices to use Pi-hole, I performed tests to verify that DNS resolution was functioning correctly and that Pi-hole could block domains associated with advertisements and trackers.
+
+DNS Resolution Testing:
+
+I tested DNS resolution to confirm that the server could process DNS requests.
+
+Ad-Blocking Test:
+
+Test Domain:
+doubleclick.net
+
+Expected Result:
+Pi-hole should block the domain instead of returning its normal public IP address.
+
+Actual Result:
+The domain resolved to 0.0.0.0 and ::, confirming that Pi-hole successfully blocked the DNS request.
+
+Pi-hole Service Verification:
+
+Command Used:
+sudo pihole status
+
+Result:
+Pi-hole's DNS service was running, listening on port 53, and advertisement blocking was enabled.
+
+Testing Outcome:
+
+The tests confirmed that Pi-hole was functioning as a DNS-based ad-blocking solution. The configured devices could use the server for DNS filtering, and the test domain was successfully blocked.
+
+Screenshot 15: Pi-hole Service and Initial Security Status
+
+
+========================================
+SSH REMOTE ACCESS CONFIGURATION
+========================================
+
+Purpose:
+
+SSH was configured to allow remote access to the Ubuntu Server from my Windows computer. This allows me to manage the server, execute Linux commands, and troubleshoot issues without physically using the server's keyboard and screen.
+
+SSH Software:
+OpenSSH Server
+
+SSH Port:
+22/TCP
+
+Server IP Address:
+192.168.1.211
+
+Server Hostname:
+adblock-server
+
+Installation and Verification:
+
+I updated Ubuntu's package list and checked whether OpenSSH Server was installed. The installation command confirmed that OpenSSH Server was already installed and was the newest available version.
+
+Commands Used:
+sudo apt update
+sudo apt install openssh-server
+
+SSH Service Configuration:
+
+After checking the SSH service, I discovered that it was inactive. I enabled the service and configured it to start automatically when the server boots.
+
+Commands Used:
+sudo systemctl status ssh
+sudo systemctl enable --now ssh
+sudo systemctl status ssh
+
+Result:
+The SSH service was successfully enabled and verified as active (running).
+
+Remote Connection and Troubleshooting:
+
+I attempted to establish an SSH connection from my Windows computer to the Ubuntu Server. During the process, I encountered connection timeouts and authentication-related connection issues.
+
+After troubleshooting the connection and verifying the SSH service, I successfully connected to the server remotely.
+
+Connection Command:
+ssh serveradmin@192.168.1.211
+
+Verification Command:
+hostname
+
+Result:
+adblock-server
+
+Testing Outcome:
+
+SSH remote access was successfully configured and verified. I can now administer the Ubuntu Server remotely from my Windows computer.
+
+Documentation:
+Documentation/SSH_Remote_Access.txt
+
+Screenshots:
+16 - OpenSSH Installation Status
+17 - Ubuntu Package Update
+18 - OpenSSH Server Installation
+19 - SSH Service Status
+20 - SSH Service Enabled
+21 - SSH Service Running
+22 - Windows SSH Connection
+23 - Successful SSH Remote Access
+
+
+========================================
+UFW FIREWALL CONFIGURATION
+========================================
+
+Purpose:
+
+UFW (Uncomplicated Firewall) was configured to improve the security of my Ubuntu Server by controlling incoming and outgoing network traffic. The firewall allows the connections needed for Pi-hole DNS filtering, web dashboard access, and SSH remote administration.
+
+Firewall Software:
+UFW (Uncomplicated Firewall)
+
+Initial Firewall Status:
+Inactive
+
+Initial Verification Command:
+sudo ufw status verbose
+
+Firewall Configuration:
+
+After checking the firewall's initial status, I configured rules to allow the necessary network services before activating the firewall.
+
+Firewall Rules:
+
+22/TCP - SSH Remote Access
+
+53/UDP - Pi-hole DNS Requests
+
+53/TCP - Pi-hole DNS Requests
+
+80/TCP - Pi-hole Web Dashboard (HTTP)
+
+443/TCP - HTTPS Traffic
+
+Commands Used:
+sudo ufw allow 22/tcp
+sudo ufw allow 53/udp
+sudo ufw allow 53/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+Firewall Verification:
+
+After configuring the firewall rules, I reviewed the rules and verified that UFW was active.
+
+Commands Used:
+sudo ufw show added
+sudo ufw status verbose
+
+Final Firewall Status:
+Active
+
+Default Firewall Policies:
+Incoming: Deny
+Outgoing: Allow
+
+Testing and Verification:
+
+After activating the firewall, I verified that SSH remote access and Pi-hole services continued functioning correctly.
+
+Result:
+
+The UFW firewall was successfully configured and activated. The server now restricts incoming network traffic while allowing the services required for remote administration and DNS-based ad blocking.
+
+Documentation:
+Documentation/UFW_Firewall_Configuration.txt
+
+Screenshots:
+24 - UFW Initial Status
+25 - UFW SSH Rule
+26 - UFW DNS UDP Rule
+27 - UFW DNS TCP Rule
+28 - UFW Pi-hole Web Dashboard Rule
+29 - UFW Firewall Rules
+30 - UFW Active Status
+
+
+============
+Screenshots
+============
+
+01-Laptop-Hardware.png
+Shows the laptop's system information, including the manufacturer, model, processor, RAM, system type, and operating system.
+
+02-Network-Configuration.png
+Shows the laptop's network configuration using the ipconfig command.
+
+03-Internet-Connectivity-Test.png
+Shows the successful ping test to 8.8.8.8 and confirms 0% packet loss.
+
+04-DNS-Connectivity-Test.png
+Shows the successful ping test to google.com and confirms 0% packet loss.
+
+05-DNS-Resolution-Test.png
+Shows the successful nslookup test, confirming that the laptop could resolve domain names to IP addresses before installing the ad-blocking software.
+
+06-Storage-Capacity.png
+Shows the laptop's available storage space, confirming that it had sufficient disk capacity for the Ubuntu Server installation.
+
+07-Power-Status.png
+Shows the laptop's power configuration, including its AC power connection, fully charged battery, and selected power mode.
+
+08-Network-Adapter-Status.png
+Shows the laptop's network adapter information and connection status during the initial hardware and network assessment.
+
+09-Ubuntu-Server-ISO.png
+Shows the Ubuntu Server installation image selected for the project.
+
+10-Rufus-Configuration.png
+Shows the Rufus settings used to prepare the bootable Ubuntu Server installation USB, including the partition scheme, target system, and file system.
+
+11-Bootable-USB-Created.png
+Shows the completed Rufus process, confirming that the Ubuntu Server installation USB was successfully created.
+
+12-Ubuntu-Boot-Menu.png
+Shows the Toshiba laptop's BIOS boot menu, including the available USB boot option.
+
+13-Ubuntu-Initial-Setup.png
+Shows Ubuntu Server completing its initial setup and generating SSH host keys.
+
+14-Network-Configuration-Verification.png
+Shows Linux networking commands used to verify the Ubuntu Server's network configuration, including its IP address, default gateway, and neighboring network devices.
+
+15-Pi-hole-Service-and-Security-Status.png
+Shows Pi-hole's DNS service running with blocking enabled, along with the initial inactive status of the UFW firewall and SSH service.
+
+16-OpenSSH-Installation-Status.png
+Shows the initial verification of the OpenSSH Server installation and SSH service status before configuring remote access.
+
+17-Ubuntu-Package-Update.png
+Shows the sudo apt update command successfully refreshing Ubuntu's package list in preparation for SSH configuration.
+
+18-OpenSSH-Server-Installation.png
+Shows the OpenSSH Server installation command confirming that the software was already installed and was the newest available version.
+
+19-SSH-Service-Status.png
+Shows the initial SSH service status as inactive (dead), indicating that the service needed to be started.
+
+20-SSH-Service-Enabled.png
+Shows the sudo systemctl enable --now ssh command enabling the SSH service and configuring it to start automatically when the server boots.
+
+21-SSH-Service-Running.png
+Shows the SSH service successfully enabled and running, confirming that the server was ready to accept SSH connections.
+
+22-Windows-SSH-Connection.png
+Shows the SSH connection process from Windows Terminal while attempting to establish remote access to the Ubuntu Server.
+
+23-Successful-SSH-Remote-Access.png
+Shows a successful SSH connection from the Windows computer to the Ubuntu Server, including verification of the server's hostname as adblock-server.
+
+24-UFW-Initial-Status.png
+Shows the initial UFW firewall status as inactive before configuring security rules.
+
+25-UFW-SSH-Rule.png
+Shows the sudo ufw allow 22/tcp command allowing SSH connections through TCP port 22 for remote server administration.
+
+26-UFW-DNS-UDP-Rule.png
+Shows the sudo ufw allow 53/udp command allowing incoming DNS requests through UDP port 53 for Pi-hole.
+
+27-UFW-DNS-UDP-Rule-Success.png
+Shows the sudo ufw allow 53/tcp command allowing incoming DNS requests through TCP port 53 for Pi-hole.
+
+28-UFW-Pi-hole-Web-Dashboard-Rule.png
+Shows the sudo ufw allow 80/tcp command allowing HTTP traffic through TCP port 80 for access to the Pi-hole web dashboard.
+
+29-UFW-Firewall-Rules.png
+Shows the configured UFW firewall rules, confirming that the necessary permissions were added for SSH, DNS, and web access.
+
+30-UFW-Active-Status.png
+Shows the final UFW firewall status as active, confirming that the firewall was successfully enabled and the configured security rules were applied.
+
+31-Server-Health-Check-System-Information.png
+Shows the successful execution of the Bash server health check script, including the server's hostname, uptime, disk usage, memory usage, Pi-hole DNS filtering status, SSH service status, and UFW firewall status.
+Confirms that Pi-hole blocking is enabled, SSH is active, and the UFW firewall is active.
+
+
+===========================
+Initial Project Status Log
+===========================
+
+Phase 1: Initial Setup
+Status: In Progress
+
+Completed:
+[X] Identified laptop hardware
+[X] Documented processor and RAM
+[X] Confirmed 64-bit architecture
+[X] Identified current operating system
+[X] Documented Python version
+[X] Confirmed Wi-Fi connectivity
+[X] Tested Internet connectivity
+[X] Tested DNS-based connectivity
+
+Next Step:
+Run an nslookup test to verify DNS resolution before making changes to the system.
+
+========================================
+PROJECT PROGRESS UPDATE
+========================================
+
+Phase 1: Initial Hardware and Network Assessment
+Status: Completed
+
+[X] Identified laptop hardware and specifications
+[X] Documented the original Windows environment
+[X] Verified network and Internet connectivity
+[X] Tested DNS resolution
+[X] Evaluated the laptop for use as a Linux server
+
+Phase 2: Ubuntu Server Installation
+Status: Completed
+
+[X] Selected Ubuntu Server as the operating system
+[X] Downloaded the Ubuntu Server installation image
+[X] Created a bootable USB using Rufus
+[X] Booted the laptop from the installation USB
+[X] Installed Ubuntu Server
+[X] Configured and verified the server's network connection
+
+Phase 3: Pi-hole Installation and Configuration
+Status: Completed
+
+[X] Installed Pi-hole
+[X] Verified that the Pi-hole DNS service was running
+[X] Configured seven devices to use Pi-hole for DNS
+[X] Tested DNS resolution
+[X] Verified advertisement blocking
+[X] Confirmed access to the Pi-hole web dashboard
+
+Phase 4: SSH Remote Access and Firewall Security
+Status: Completed
+
+[X] Verified OpenSSH Server installation
+[X] Enabled and started the SSH service
+[X] Troubleshot SSH connection issues
+[X] Successfully connected remotely from Windows
+[X] Configured UFW firewall rules
+[X] Activated the UFW firewall
+[X] Verified that SSH and Pi-hole continued functioning
+
+Phase 5: Bash Scripting and Server Monitoring
+Status: Completed
+
+[X] Developed a Bash script to monitor Ubuntu Server
+[X] Configured executable permissions for the script
+[X] Transferred the script securely using SCP
+[X] Troubleshot script execution and permission errors
+[X] Verified hostname, uptime, disk usage, and memory usage
+[X] Verified Pi-hole, SSH, and UFW service statuses
+[X] Successfully completed final script testing
+[X] Documented script development and testing results
+[X] Captured screenshot 31 as testing evidence
+
+Phase 6: Project Documentation
+Status: In Progress
+
+[X] Documented the initial system assessment
+[X] Documented Ubuntu Server installation
+[X] Documented Pi-hole configuration and testing
+[X] Created SSH remote access documentation
+[X] Created UFW firewall documentation
+[X] Organized and numbered 31 screenshots
+[X] Added screenshot descriptions to the project overview
+[X] Created and tested a Bash server health check script
+[X] Documented Bash script development and troubleshooting
+[X] Captured final Bash script testing evidence
+
+[X] Review all project documentation for accuracy
+[X] Verify screenshot references and filenames
+[ ] Prepare the completed project for an IT portfolio
+
+Current Project Status:
+Phase 6 - Project Documentation
+
+Overall Status:
+In Progress
+
+
+========================================
+TECHNICAL SKILLS DEMONSTRATED
+========================================
+
+Linux System Administration:
+- Installed and configured Ubuntu Server on a repurposed laptop.
+- Managed Linux services using systemctl.
+- Used Linux terminal commands to configure and troubleshoot the server.
+- Updated software packages using APT.
+
+Bash Scripting and Automation:
+- Developed a Bash script to monitor Ubuntu Server system information and service statuses.
+- Used Linux commands to check hostname, uptime, disk usage, and memory usage.
+- Automated the execution of seven system checks through a single script.
+- Transferred Bash scripts securely from Windows to Ubuntu using SCP.
+- Configured executable file permissions using chmod.
+- Troubleshot Windows CRLF and Linux LF line-ending compatibility issues.
+- Resolved Pi-hole configuration permission warnings using sudo.
+- Tested and verified successful script execution.
+
+Networking and DNS:
+- Configured and verified Ethernet network connectivity.
+- Worked with IPv4 addresses, subnet masks, and default gateways.
+- Installed and configured Pi-hole for DNS-based advertisement and tracker blocking.
+- Manually configured DNS settings on multiple network devices.
+- Tested DNS resolution and verified domain blocking.
+
+Remote Server Administration:
+- Installed and configured OpenSSH Server.
+- Enabled SSH to start automatically during system boot.
+- Established a remote SSH connection from Windows Terminal.
+- Troubleshot SSH connection and service issues.
+
+Network Security:
+- Configured UFW firewall rules for SSH, DNS, HTTP, and HTTPS traffic.
+- Applied firewall rules to control incoming network connections.
+- Verified firewall activation and confirmed that essential services remained accessible.
+
+Troubleshooting and Problem-Solving:
+- Identified and resolved network configuration issues.
+- Worked around router limitations by manually configuring device DNS settings.
+- Diagnosed and resolved SSH remote connection problems.
+- Verified server functionality after implementing firewall security.
+
+Technical Documentation:
+- Documented hardware specifications and initial system conditions.
+- Recorded installation procedures, configuration changes, and testing results.
+- Organized 31 screenshots to provide visual evidence of project progress.
+- Created separate documentation for SSH remote access, UFW firewall configuration, and Bash server health monitoring.
+- Documented Bash script development, troubleshooting, testing, and final results.
+- Recorded the successful execution of all seven server health checks.
+
+## SERVER HEALTH CHECK AUTOMATION
+
+As part of my Pi-hole Ad Blocker project, I developed a Bash script to simplify monitoring and maintaining my Ubuntu Server.
+
+The script performs seven system checks, including displaying the server's hostname, uptime, disk usage, and memory usage. It also verifies the status of Pi-hole DNS filtering, SSH remote access, and the UFW firewall.
+
+I created the script using Windows Notepad and transferred it to Ubuntu Server using SCP over an SSH connection.
+
+During testing, I encountered several issues involving Windows and Linux line endings, incomplete file transfers, and Linux file permissions. I successfully troubleshot these issues and updated the script to run correctly.
+
+After completing the troubleshooting process, I performed a final test and confirmed that all seven checks executed successfully.
+
+This addition to my project allowed me to gain hands-on experience with Bash scripting, Linux system administration, secure file transfers, troubleshooting, and basic server monitoring.
+
+**Script:** `Scripts/server_health_check.sh`
+
+**Documentation:** `Documentation/Server_Health_Check_Documentation.txt`
+
+**Testing Evidence:** `Screenshots/31-Server-Health-Check-System-Information.png`
+
