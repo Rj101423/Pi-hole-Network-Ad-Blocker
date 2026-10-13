@@ -1,0 +1,268 @@
+# SERVER HEALTH CHECK SCRIPT DOCUMENTATION
+
+## 1. PURPOSE
+
+The purpose of this script is to make it easier to monitor the health and performance of my Ubuntu Server.
+
+Instead of manually entering multiple commands, I created a Bash script that displays important system information and checks whether the services needed for my Pi-hole ad blocker are running.
+
+This helps me identify potential problems with my server and makes routine maintenance easier.
+
+
+## 2. SOFTWARE AND TOOLS
+
+- Ubuntu Server 26.04.1 LTS
+- Bash
+- Windows PowerShell
+- OpenSSH
+- SCP (Secure Copy)
+- Pi-hole
+- UFW (Uncomplicated Firewall)
+- Windows Notepad
+
+
+## 3. SCRIPT INFORMATION
+
+Script Name: server_health_check.sh
+
+Script Type: Bash Shell Script
+
+Development Environment: Windows 11 using Notepad
+
+Execution Environment: Ubuntu Server
+
+Script Location on Ubuntu: /home/serveradmin/server_health_check.sh
+
+The script performs the following checks:
+
+- Server hostname
+- System uptime
+- Disk usage
+- Memory usage
+- Pi-hole DNS filtering status
+- SSH service status
+- UFW firewall status
+
+
+## 4. SCRIPT COMMANDS AND FUNCTIONS
+
+I created a Bash script to automatically display system information and check the status of important services on my Ubuntu Server.
+
+The script uses the following commands:
+
+- `#!/bin/bash` — Specifies that the script should run using the Bash shell.
+- `echo` — Displays headings and messages to organize the script's output.
+- `hostname` — Displays the server's hostname.
+- `uptime` — Shows how long the server has been running and its current system load.
+- `df -h /` — Displays the amount of disk space used and available on the server's main filesystem.
+- `free -h` — Displays memory and swap usage in a readable format.
+- `sudo pihole status` — Checks whether Pi-hole's DNS service is running and whether blocking is enabled.
+- `systemctl is-active ssh` — Checks whether the SSH service is active.
+- `sudo ufw status` — Displays the firewall's current status and configured rules.
+
+By combining these commands into one script, I can check my server's system resources and important services without having to enter each command separately.
+
+
+## 5. SCRIPT TRANSFER AND INSTALLATION
+
+After creating my Bash script in Windows Notepad, I used Windows PowerShell to transfer it to my Ubuntu Server.
+
+I used SCP (Secure Copy), which transfers files securely over an SSH connection.
+
+**File Transfer Command:**
+
+`scp .\server_health_check.sh serveradmin@192.168.1.211:~/`
+
+This command transferred my script from my Windows PC to the home directory of my Ubuntu user.
+
+After connecting to Ubuntu through SSH, I verified that the script was transferred successfully.
+
+**File Verification Command:**
+
+`ls -l ~/server_health_check.sh`
+
+The command confirmed that the file existed in my Ubuntu home directory.
+
+**File Permissions Command:**
+
+`chmod +x ~/server_health_check.sh`
+
+I used this command to give the script executable permissions.
+
+I verified the permissions using `ls -l` and confirmed that the file had executable permissions.
+
+This allowed me to run the script directly from the Ubuntu terminal.
+
+
+## 6. TROUBLESHOOTING
+
+During the development and testing of my Bash script, I encountered several issues that required troubleshooting.
+
+### Issue 1: Bash Interpreter Error
+
+When I first attempted to execute the script on Ubuntu, I received the following error:
+
+`/bin/bash^M: bad interpreter: No such file or directory`
+
+This occurred because I created the script using Windows Notepad, which saved the file with Windows-style (CRLF) line endings instead of Linux-style (LF) line endings.
+
+**Solution:**
+
+I used the following command to remove the Windows carriage-return characters:
+
+`sed -i 's/\r$//' ~/server_health_check.sh`
+
+After running this command, Ubuntu was able to execute the script.
+
+### Issue 2: Incomplete Script Output
+
+During testing, the script initially displayed only the server hostname and uptime instead of all seven system checks.
+
+I used the `cat ~/server_health_check.sh` command to inspect the script's contents and discovered that the copy on Ubuntu was incomplete.
+
+**Solution:**
+
+I verified that the original Windows script contained all the necessary commands and transferred the complete file again using SCP.
+
+After correcting the line endings, the script displayed all seven sections.
+
+### Issue 3: Pi-hole Permission Warning
+
+When I tested the complete script, Pi-hole displayed a permission warning because my Ubuntu user could not read `/etc/pihole/pihole.toml`.
+
+Although Pi-hole reported that DNS filtering was enabled, the warning indicated that the status information might not reflect the current configuration.
+
+**Solution:**
+
+I updated the script by changing:
+
+`pihole status`
+
+to:
+
+`sudo pihole status`
+
+This allowed the command to read Pi-hole's configuration using administrator privileges.
+
+After transferring and testing the updated script, the permission warning no longer appeared.
+
+
+## 7. TESTING AND VERIFICATION
+
+After resolving the script errors, I successfully executed my Bash script on Ubuntu Server.
+
+**Command Used:**
+
+`~/server_health_check.sh`
+
+During my initial complete test, the script displayed the following system information and service statuses. After correcting the Pi-hole permission warning, I ran the script again and confirmed that all seven checks displayed successfully.
+
+**Server Information**
+- Hostname: adblock-server
+- System Uptime: 5 hours and 7 minutes
+- System Load Average: 0.00, 0.00, 0.00
+
+**Disk Usage**
+- Main Filesystem Size: 98 GB
+- Used Storage: 7.3 GB
+- Available Storage: 86 GB
+- Disk Utilization: 8%
+
+**Memory Usage**
+- Total RAM: 6.2 GiB
+- Used RAM: 557 MiB
+- Available RAM: 5.7 GiB
+- Total Swap: 4.0 GiB
+- Used Swap: 0 B
+
+**Service Verification**
+- Pi-hole DNS Service: Running on port 53
+- Pi-hole DNS Blocking: Enabled
+- SSH Service: Active
+- UFW Firewall: Active
+
+The script successfully displayed the server's system information and confirmed that Pi-hole, SSH, and UFW were running.
+
+After updating the Pi-hole status command to use sudo, I reran the script and confirmed that the previous permission warning no longer appeared.
+
+### Final Testing Results
+
+After updating my Bash script to resolve the Pi-hole permission warning, I performed another test to verify that all seven checks worked correctly.
+
+**Command Used:**
+
+`~/server_health_check.sh`
+
+**Server Information**
+- Hostname: adblock-server
+- System Uptime: 2 days, 14 hours, and 36 minutes
+- System Load Average: 0.04, 0.08, 0.05
+
+**Disk Usage**
+- Main Filesystem Size: 98 GB
+- Used Storage: 7.3 GB
+- Available Storage: 86 GB
+- Disk Utilization: 8%
+
+**Memory Usage**
+- Total RAM: 6.2 GiB
+- Used RAM: 571 MiB
+- Available RAM: 5.7 GiB
+- Total Swap: 4.0 GiB
+- Used Swap: 0 B
+
+**Service Verification**
+- Pi-hole FTL: Listening on port 53 (TCP and UDP, IPv4 and IPv6)
+- Pi-hole DNS Blocking: Enabled
+- SSH Service: Active
+- UFW Firewall: Active
+
+**Firewall Verification**
+
+The UFW firewall displayed the following allowed ports:
+- 22/tcp — SSH
+- 53/udp — DNS
+- 53/tcp — DNS
+- 80/tcp — HTTP
+- 443/tcp — HTTPS
+
+All five rules were configured for both IPv4 and IPv6.
+
+**Final Test Outcome**
+
+The script successfully completed all seven checks without displaying the previous Pi-hole permission warning.
+
+The results confirmed that the server was running, Pi-hole DNS blocking was enabled, SSH was active, and the UFW firewall was active.
+
+This final test verified that the updated Bash script was functioning as intended.
+
+### Testing Evidence
+
+**Screenshot 31 — Server Health Check System Information**
+
+Filename: `31-Server-Health-Check-System-Information.png`
+
+This screenshot captures the successful execution of my Bash script on Ubuntu Server.
+
+The screenshot shows all seven checks, including server hostname, uptime, disk usage, memory usage, Pi-hole status, SSH service status, and UFW firewall status.
+
+It also confirms that Pi-hole DNS blocking is enabled, SSH is active, and the UFW firewall is active.
+
+This screenshot serves as visual evidence that my Bash script successfully executed and displayed the expected results.
+
+
+## 8. RESULTS
+
+I successfully created and tested a Bash script that allows me to monitor my Ubuntu Server and its important services using a single command.
+
+The script displays system information, including the server's hostname, uptime, disk usage, and memory usage. It also checks whether Pi-hole DNS filtering, SSH remote access, and the UFW firewall are running.
+
+During this project, I gained hands-on experience writing Bash scripts, transferring files securely using SCP, managing Linux file permissions, and troubleshooting errors.
+
+I resolved issues involving Windows and Linux line endings, incomplete file transfers, and Linux file permissions.
+
+After making the necessary corrections, I successfully executed the script and verified that all seven system checks displayed correctly.
+
+This script makes it easier to monitor my server and demonstrates my ability to use Linux command-line tools to perform basic system administration tasks.
+
+

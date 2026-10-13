@@ -1,0 +1,52 @@
+SSH REMOTE ACCESS CONFIGURATION
+
+1. PURPOSE
+
+The purpose of configuring SSH is to allow me to remotely access and manage my Ubuntu server from my Windows PC without having to physically use the laptop. This will make it easier to maintain my Pi-hole ad blocker, install updates, troubleshoot issues, and manage the server through a secure connection.
+
+2. SOFTWARE AND TOOLS
+
+Ubuntu Server
+OpenSSH Server
+Windows PowerShell
+Pi-hole
+SSH (Port 22)
+
+3. INSTALLATION AND VERIFICATION
+
+I started by updating Ubuntu's package list using the `sudo apt update` command. After the update was completed, I ran `sudo apt install openssh-server` to install OpenSSH Server. Ubuntu confirmed that OpenSSH Server was already installed and was the newest version, so no additional installation was necessary.
+
+Screenshot 16: OpenSSH Installation Status
+Screenshot 17: Ubuntu Package Update
+Screenshot 18: OpenSSH Server Installation
+
+4. SSH SERVICE CONFIGURATION
+
+After confirming that OpenSSH Server was installed, I checked the SSH service using the `sudo systemctl status ssh` command. The service was initially inactive, so I used `sudo systemctl enable --now ssh` to start it and configure it to launch automatically when Ubuntu starts.
+
+I ran `sudo systemctl status ssh` again and confirmed that the service was active and running.
+
+Screenshot 19: SSH Service Status
+Screenshot 20: SSH Service Enabled
+Screenshot 21: SSH Service Running
+
+5. SSH REMOTE CONNECTION AND TESTING
+
+After enabling SSH on my Ubuntu server, I attempted to connect remotely using Windows PowerShell. I used the `ssh username@192.168.1.211` command, replacing "username" with my Ubuntu username.
+
+During my first connection attempt, Windows asked me to verify the server's SSH fingerprint. I compared the fingerprint displayed in PowerShell with the fingerprint on my Ubuntu server to confirm they matched.
+
+My initial connection attempts were unsuccessful because the connection timed out before authentication. To troubleshoot the issue, I checked the SSH service logs, verified that SSH was listening on port 22, and used the `Test-NetConnection 192.168.1.211 -Port 22` command in Windows PowerShell.
+
+The network test returned `TcpTestSucceeded : True`, confirming that my Windows PC could reach the Ubuntu server through port 22.
+
+After enabling SSH on my Ubuntu server, I attempted to connect remotely using Windows PowerShell with the command `ssh serveradmin@192.168.1.211`.
+
+To verify that I was remotely accessing the correct server, I ran the `hostname` command. Ubuntu returned `adblock-server`, confirming that I was successfully executing commands on my Ubuntu server from Windows.
+
+6. RESULTS
+
+SSH remote access was successfully configured and tested. I can now manage my Ubuntu server from my Windows PC without physically accessing the laptop.
+
+Screenshot 22: Windows SSH Connection
+Screenshot 23: Successful SSH Remote Access

@@ -1,0 +1,72 @@
+# UFW FIREWALL CONFIGURATION
+
+## 1. PURPOSE
+
+The purpose of configuring the Ubuntu firewall is to improve the security of my Pi-hole server by controlling which network connections are allowed. This helps protect my server from unauthorized connections while allowing Pi-hole and SSH to function properly.
+
+
+## 2. SOFTWARE AND TOOLS
+
+- Ubuntu Server
+- UFW (Uncomplicated Firewall)
+- Windows PowerShell
+- Pi-hole
+- OpenSSH Server
+
+
+## 3. FIREWALL CONFIGURATION
+
+I started by checking the firewall status using the `sudo ufw status verbose` command. Ubuntu confirmed that the firewall was initially inactive.
+
+Before enabling the firewall, I created rules to allow the services needed for my server.
+
+The following ports were allowed:
+
+- Port 22/TCP: SSH remote access
+- Port 53/UDP: Pi-hole DNS requests
+- Port 53/TCP: Pi-hole DNS requests
+- Port 80/TCP: Pi-hole HTTP dashboard
+- Port 443/TCP: Pi-hole HTTPS dashboard
+
+Commands Used:
+
+sudo ufw allow 22/tcp
+sudo ufw allow 53/udp
+sudo ufw allow 53/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+Screenshot 24: UFW Initial Status
+Screenshot 25: UFW SSH Rule
+Screenshot 26: UFW DNS UDP Rule
+Screenshot 27: UFW DNS UDP Rule Success
+Screenshot 28: UFW Pi-hole Web Dashboard Rule
+Screenshot 29: UFW Firewall Rules
+
+I verified that UFW was configured with a default-deny policy for incoming connections and a default-allow policy for outgoing connections using the `sudo ufw status verbose` command. This configuration blocks incoming connections unless they are explicitly permitted by a firewall rule.
+
+After verifying the firewall rules, I enabled UFW using the `sudo ufw enable` command.
+
+
+## 4. TESTING AND VERIFICATION
+
+After enabling the firewall, I verified that its status was active.
+
+Screenshot 30: UFW Active Status
+
+I tested Pi-hole's DNS service from Windows PowerShell using the `nslookup doubleclick.net 192.168.1.211` command.
+
+The results returned `0.0.0.0` and `::`, confirming that Pi-hole was successfully blocking the advertising domain.
+
+I also opened the Pi-hole web dashboard at `http://192.168.1.211/admin` and confirmed that it was still accessible.
+
+My SSH connection remained active after enabling the firewall.
+
+
+## 5. RESULTS
+
+The Ubuntu firewall was successfully configured and enabled. SSH remote access, Pi-hole DNS blocking, and the web dashboard continued working after the firewall was activated.
+
+The firewall is configured to start automatically when Ubuntu boots.
+
+
