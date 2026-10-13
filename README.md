@@ -754,7 +754,7 @@ Throughout this project, I encountered several technical challenges that require
 
 
 
-\*\*What I Learned:\*\* I gained practical experience with Linux
+\*\*What I Learned:\*\* I gained practical experience with Linux system administration, firewall configuration, DNS filtering, and troubleshooting. This project helped me build confidence using command-line tools, documenting technical work, and maintaining a Linux server.
 
 
 
