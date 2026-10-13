@@ -1,0 +1,111 @@
+# PI-HOLE CONFIGURATION
+
+## 1. PURPOSE
+
+The purpose of this configuration is to document how Pi-hole is set up to provide DNS-based ad blocking and filtering for devices that I manually configured on my home network. Pi-hole helps block advertising and tracking domains by checking DNS requests against its configured blocklists.
+
+
+## 2. SOFTWARE AND SERVER INFORMATION
+
+Software: Pi-hole
+
+Operating System: Ubuntu Server 26.04.1 LTS
+
+Server Hostname: adblock-server
+
+Server IP Address: 192.168.1.211
+
+DNS Port: 53 (TCP/UDP)
+
+Web Dashboard: http://192.168.1.211/admin
+
+
+## 3. UPSTREAM DNS CONFIGURATION
+
+Upstream DNS Provider: Cloudflare
+
+Pi-hole uses Cloudflare to resolve DNS requests that are not blocked by its configured blocklists.
+
+I verified that Cloudflare was selected as the upstream DNS provider in the Pi-hole web dashboard under Settings → DNS.
+
+
+## 4. BLOCKLIST CONFIGURATION
+
+Pi-hole uses blocklists to identify advertising and tracking domains that should be blocked from resolving through DNS.
+
+Configured Blocklist: StevenBlack Hosts
+
+Blocklist URL: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+
+Blocklist Status: Enabled
+
+The StevenBlack Hosts blocklist contains domains associated with advertising and tracking services.
+
+Pi-hole uses this blocklist to identify and block matching DNS requests from devices configured to use my Pi-hole server.
+
+I verified that the blocklist was enabled through the Pi-hole web dashboard under Lists.
+
+
+## 5. DEVICE DNS CONFIGURATION
+
+Because my Spectrum router does not allow me to change the DNS settings for the entire network, I manually configured seven devices to use my Pi-hole server.
+
+The following devices were configured:
+
+- 1 Smart TV
+- 2 Android Phones
+- 1 iPhone
+- 2 Windows PCs
+- 1 iPad
+
+Total Devices Configured: 7
+
+Pi-hole DNS Server: 192.168.1.211
+
+Each device was manually configured to use 192.168.1.211 as its DNS server.
+
+This allows the devices to send DNS requests to Pi-hole, where advertising and tracking domains can be blocked before allowed requests are forwarded to Cloudflare.
+
+Devices that are not configured to use Pi-hole will continue using their existing DNS settings.
+
+
+## 6. DNS FILTERING VERIFICATION
+
+After configuring Pi-hole, I tested its DNS filtering capabilities using Windows PowerShell.
+
+Command Used:
+
+nslookup doubleclick.net 192.168.1.211
+
+This command sends a DNS request directly to my Pi-hole server to check whether the advertising domain is blocked.
+
+Test Domain: doubleclick.net
+
+DNS Server: 192.168.1.211
+
+Results:
+
+IPv4 Response: 0.0.0.0
+
+IPv6 Response: ::
+
+These results confirmed that Pi-hole successfully blocked the advertising domain by returning non-routable addresses instead of the domain's actual IP addresses.
+
+I also verified that the Pi-hole web dashboard was accessible at http://192.168.1.211/admin.
+
+
+## 7. RESULTS
+
+I successfully configured Pi-hole on my Ubuntu Server to provide DNS-based ad blocking and filtering for devices connected to my home network.
+
+Pi-hole uses Cloudflare as its upstream DNS provider and the enabled StevenBlack Hosts blocklist to identify and block advertising and tracking domains.
+
+Because my Spectrum router does not allow network-wide DNS configuration changes, I manually configured seven devices to use my Pi-hole server at 192.168.1.211.
+
+I tested DNS filtering using Windows PowerShell and confirmed that Pi-hole successfully blocked doubleclick.net by returning 0.0.0.0 and ::.
+
+I also verified that the Pi-hole web dashboard remained accessible.
+
+This project demonstrates my ability to configure and test DNS services, manage blocklists, and implement network-level ad blocking across multiple devices.
+
+

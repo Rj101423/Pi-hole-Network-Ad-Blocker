@@ -1,0 +1,121 @@
+# NETWORK CONFIGURATION
+
+## 1. PURPOSE
+
+The purpose of this configuration is to document the network settings used by my Ubuntu Server. These settings allow my server to communicate with other devices on my home network and provide DNS filtering through Pi-hole.
+
+
+## 2. SERVER INFORMATION
+
+Hostname: adblock-server
+
+Operating System: Ubuntu Server 26.04.1 LTS
+
+Network Interface: enp1s0
+
+IP Address: 192.168.1.211
+
+Subnet Mask: 255.255.255.0 (/24)
+
+Default Gateway: 192.168.1.1
+
+IP Configuration Method: Static IPv4 Address (configured through Netplan)
+
+
+## 3. UBUNTU NETWORK CONFIGURATION
+
+Ubuntu Server uses Netplan to manage network settings.
+
+Network Configuration File: /etc/netplan/00-installer-config.yaml
+
+The network interface enp1s0 is configured with a static IPv4 address using Netplan.
+
+DHCP is disabled, and the server is manually configured to use the IP address 192.168.1.211/24 with a default gateway of 192.168.1.1.
+
+The configured DNS servers are 192.168.1.1 and 8.8.8.8.
+
+Using a static IP address helps keep my Pi-hole server accessible at the same network address, allowing connected devices to consistently use it for DNS filtering.
+
+
+## 4. NETPLAN CONFIGURATION FILE
+
+Configuration File: /etc/netplan/00-installer-config.yaml
+
+The following configuration was verified directly on my Ubuntu Server using the command:
+
+sudo cat /etc/netplan/00-installer-config.yaml
+
+**Configuration Contents:**
+
+```yaml
+# This is the network config written by 'subiquity'
+network:
+  version: 2
+  ethernets:
+    enp1s0:
+      dhcp4: false
+      addresses:
+        - 192.168.1.211/24
+      routes:
+        - to: default
+          via: 192.168.1.1
+      nameservers:
+        addresses:
+          - 192.168.1.1
+          - 8.8.8.8
+```
+
+This configuration assigns a static IPv4 address to my Ubuntu Server, specifies the default gateway, and identifies the DNS servers used by the server itself.
+
+
+## 5. NETWORK VERIFICATION
+
+After configuring the network, I used Ubuntu's command-line tools to verify the server's network settings.
+
+Commands Used:
+
+sudo netplan generate
+ip route
+ip neigh
+
+The `sudo netplan generate` command checks the Netplan configuration and generates the necessary network configuration files.
+
+The `ip route` command displays the server's routing information, including its default gateway.
+
+The `ip neigh` command displays neighboring devices discovered on the local network.
+
+These commands helped me verify the network configuration and troubleshoot connectivity during the Ubuntu Server setup.
+
+Screenshot 14: Ubuntu Network Verification
+
+
+## 6. PI-HOLE DNS CONFIGURATION
+
+Pi-hole is configured to provide DNS filtering for devices connected to my home network.
+
+Pi-hole Server IP Address: 192.168.1.211
+
+DNS Service Port: 53 (TCP/UDP)
+
+Upstream DNS Provider: Cloudflare
+
+Pi-hole Web Dashboard: http://192.168.1.211/admin
+
+Pi-hole checks DNS requests against its configured blocklists. Requests for blocked domains are prevented from resolving normally, while allowed requests are forwarded to Cloudflare for DNS resolution.
+
+Because my Spectrum router does not allow me to change the DNS settings for the entire network, I manually configured seven devices to use my Pi-hole server as their DNS provider.
+
+
+## 7. RESULTS
+
+My Ubuntu Server was successfully configured with a static IP address of 192.168.1.211 using Netplan.
+
+The server uses the enp1s0 network interface and communicates with other devices through my home network.
+
+Pi-hole is configured to provide DNS filtering using Cloudflare as its upstream DNS provider.
+
+I manually configured seven devices to use my Pi-hole server for DNS filtering because my Spectrum router does not allow network-wide DNS configuration changes.
+
+Testing confirmed that Pi-hole successfully blocked advertising domains while allowing access to its web dashboard and SSH remote connections.
+
+

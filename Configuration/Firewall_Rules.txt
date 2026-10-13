@@ -1,0 +1,75 @@
+# FIREWALL RULES
+
+## 1. PURPOSE
+
+The purpose of this file is to document the firewall rules used to secure my Ubuntu Server while allowing Pi-hole DNS filtering, SSH remote access, and access to the Pi-hole web dashboard.
+
+
+## 2. FIREWALL INFORMATION
+
+Firewall Software: UFW (Uncomplicated Firewall)
+
+Operating System: Ubuntu Server 26.04.1 LTS
+
+Firewall Status: Active
+
+Default Incoming Policy: Deny
+
+Default Outgoing Policy: Allow
+
+
+## 3. ALLOWED PORTS
+
+| Port | Protocol | Purpose |
+|---|---|---|
+| 22 | TCP | SSH remote access |
+| 53 | UDP | Pi-hole DNS requests |
+| 53 | TCP | Pi-hole DNS requests |
+| 80 | TCP | Pi-hole HTTP web dashboard |
+| 443 | TCP | HTTPS connections |
+
+These rules allow the services needed for my Pi-hole server while blocking other incoming connections by default.
+
+
+## 4. FIREWALL VERIFICATION
+
+I verified my firewall configuration using the following command:
+
+sudo ufw status verbose
+
+The command confirmed the following settings:
+
+Firewall Status: Active
+
+Logging: On (Low)
+
+Default Incoming Policy: Deny
+
+Default Outgoing Policy: Allow
+
+Default Routed Policy: Disabled
+
+IPv4 Rules: Enabled
+
+IPv6 Rules: Enabled
+
+All five configured ports (22/TCP, 53/UDP, 53/TCP, 80/TCP, and 443/TCP) were confirmed as ALLOW IN.
+
+The firewall rules apply to both IPv4 and IPv6 connections.
+
+Screenshot 30: UFW Active Status
+
+
+## 5. RESULTS
+
+My Ubuntu Server firewall is active and configured using UFW.
+
+The firewall denies incoming connections by default while allowing outgoing connections.
+
+I configured rules to allow SSH remote access, Pi-hole DNS requests, and web dashboard connections.
+
+I verified that all five firewall rules are active for both IPv4 and IPv6 using the `sudo ufw status verbose` command.
+
+These settings help protect my Ubuntu Server while allowing the services needed for my Pi-hole ad-blocking project to operate.
+
+
