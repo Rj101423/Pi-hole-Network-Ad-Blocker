@@ -1,0 +1,114 @@
+# UFW FIREWALL TEST
+
+## 1. PURPOSE
+
+The purpose of this test was to verify that my Ubuntu Server firewall was active and properly configured while allowing Pi-hole DNS filtering, SSH remote access, and access to the Pi-hole web dashboard.
+
+
+## 2. TEST ENVIRONMENT
+
+Server Operating System: Ubuntu Server 26.04.1 LTS
+
+Firewall Software: UFW (Uncomplicated Firewall)
+
+Server Hostname: adblock-server
+
+Server IP Address: 192.168.1.211
+
+Testing Tools: Ubuntu Terminal, Windows PowerShell
+
+
+## 3. TEST PROCEDURE
+
+After configuring and enabling UFW, I verified the firewall status using the following command:
+
+`sudo ufw status verbose`
+
+This command displayed the firewall's current status, default policies, and configured rules.
+
+I also tested whether the services needed for my Pi-hole server continued working after enabling the firewall.
+
+**DNS Filtering Test:**
+
+`nslookup doubleclick.net 192.168.1.211`
+
+**SSH Connectivity Test:**
+
+`ssh serveradmin@192.168.1.211`
+
+**Pi-hole Dashboard Test:**
+
+`http://192.168.1.211/admin`
+
+
+## 4. EXPECTED RESULTS
+
+The firewall should be active with the following default policies:
+
+- Incoming Connections: Deny
+- Outgoing Connections: Allow
+
+The following ports should be allowed:
+
+- 22/TCP — SSH remote access
+- 53/UDP — Pi-hole DNS requests
+- 53/TCP — Pi-hole DNS requests
+- 80/TCP — HTTP web dashboard
+- 443/TCP — HTTPS connections
+
+Pi-hole DNS filtering, SSH remote access, and the web dashboard should continue functioning after enabling the firewall.
+
+
+## 5. ACTUAL RESULTS
+
+**Firewall Status:** Active
+
+**Default Incoming Policy:** Deny
+
+**Default Outgoing Policy:** Allow
+
+**Firewall Logging:** On (Low)
+
+All five firewall rules were confirmed as ALLOW IN for both IPv4 and IPv6.
+
+**DNS Filtering:**
+
+The `nslookup` test returned:
+
+- IPv4: `0.0.0.0`
+- IPv6: `::`
+
+This confirmed that Pi-hole successfully blocked the tested advertising domain.
+
+**SSH Remote Access:**
+
+My SSH connection remained active after enabling the firewall.
+
+**Pi-hole Web Dashboard:**
+
+The Pi-hole web dashboard remained accessible through my browser.
+
+
+## 6. TEST OUTCOME
+
+**Status: PASSED**
+
+The UFW firewall was successfully enabled and verified.
+
+The firewall denied incoming connections by default while allowing the services required for my Pi-hole server.
+
+Testing confirmed that DNS filtering, SSH remote access, and the Pi-hole web dashboard continued functioning after the firewall was activated.
+
+This test demonstrated my ability to configure firewall rules, verify network security settings, and test service connectivity.
+
+
+## 7. TESTING EVIDENCE
+
+**Screenshot 30 — UFW Active Status**
+
+Filename: `30-UFW-Active-Status.png`
+
+This screenshot documents the active firewall status and configured rules.
+
+Additional evidence is available in screenshots 24–29, which document the firewall configuration process.
+

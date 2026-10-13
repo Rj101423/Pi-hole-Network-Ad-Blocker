@@ -1,0 +1,120 @@
+# SERVER HEALTH CHECK SCRIPT TEST
+
+## 1. PURPOSE
+
+The purpose of this test was to verify that my Bash server health check script could successfully display system information and check the status of important services on my Ubuntu Server.
+
+This test also confirmed that the script worked correctly after troubleshooting several execution and permission errors.
+
+
+## 2. TEST ENVIRONMENT
+
+Operating System: Ubuntu Server 26.04.1 LTS
+
+Server Hostname: adblock-server
+
+Script Name: server_health_check.sh
+
+Script Location: /home/serveradmin/server_health_check.sh
+
+Testing Tool: Ubuntu Terminal
+
+
+## 3. TEST PROCEDURE
+
+After transferring my Bash script to Ubuntu Server using SCP, I configured executable permissions using:
+
+`chmod +x ~/server_health_check.sh`
+
+I corrected Windows-style line endings using:
+
+`sed -i 's/\r$//' ~/server_health_check.sh`
+
+After resolving the script execution issues, I ran the following command:
+
+`~/server_health_check.sh`
+
+The script performed seven system checks:
+
+1. Server hostname
+2. System uptime
+3. Disk usage
+4. Memory usage
+5. Pi-hole DNS filtering status
+6. SSH service status
+7. UFW firewall status
+
+
+## 4. EXPECTED RESULTS
+
+The script should execute successfully and display all seven system checks.
+
+Expected service statuses:
+
+- Pi-hole DNS service: Running
+- Pi-hole DNS blocking: Enabled
+- SSH service: Active
+- UFW firewall: Active
+
+The script should complete without the previous Bash interpreter error or Pi-hole permission warning.
+
+
+## 5. ACTUAL RESULTS
+
+After troubleshooting the script and performing the final test, I recorded the following results.
+
+**Server Information**
+
+- Hostname: adblock-server
+- Uptime: 2 days, 14 hours, and 36 minutes
+- System Load Average: 0.04, 0.08, 0.05
+
+**Disk Usage**
+
+- Main Filesystem Size: 98 GB
+- Used Storage: 7.3 GB
+- Available Storage: 86 GB
+- Disk Utilization: 8%
+
+**Memory Usage**
+
+- Total RAM: 6.2 GiB
+- Used RAM: 571 MiB
+- Available RAM: 5.7 GiB
+- Total Swap: 4.0 GiB
+- Used Swap: 0 B
+
+**Service Verification**
+
+- Pi-hole FTL: Listening on port 53 (TCP and UDP, IPv4 and IPv6)
+- Pi-hole DNS Blocking: Enabled
+- SSH Service: Active
+- UFW Firewall: Active
+
+The firewall also displayed the five configured rules for SSH, DNS, HTTP, and HTTPS connections.
+
+All seven checks displayed successfully without the previous Pi-hole permission warning.
+
+
+## 6. TEST OUTCOME
+
+**Status: PASSED**
+
+The Bash server health check script successfully completed all seven system checks.
+
+The results confirmed that my Ubuntu Server was running, Pi-hole DNS blocking was enabled, SSH was active, and the UFW firewall was active.
+
+This test demonstrated my ability to develop, troubleshoot, and execute a Bash script for basic Linux server monitoring.
+
+
+## 7. TESTING EVIDENCE
+
+**Screenshot 31 — Server Health Check System Information**
+
+Filename: `31-Server-Health-Check-System-Information.png`
+
+This screenshot captures the successful execution of the Bash script and displays all seven system checks.
+
+Additional documentation is available in:
+
+`Documentation/Server_Health_Check_Documentation.txt`

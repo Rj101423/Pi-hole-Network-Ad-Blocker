@@ -1,0 +1,49 @@
+# DNS BLOCKING TEST
+
+## 1. PURPOSE
+
+The purpose of this test was to verify that my Pi-hole server could successfully block advertising domains through DNS filtering.
+
+
+## 2. TEST ENVIRONMENT
+
+Operating System: Windows
+
+Testing Tool: Windows PowerShell
+
+DNS Server: 192.168.1.211
+
+Ad-Blocking Software: Pi-hole
+
+Test Domain: doubleclick.net
+
+
+## 3. TEST PROCEDURE
+
+I opened Windows PowerShell and entered the following command:
+
+`nslookup doubleclick.net 192.168.1.211`
+
+This command sends a DNS request directly to my Pi-hole server to determine whether the advertising domain is blocked.
+
+
+## 4. EXPECTED RESULT
+
+Pi-hole should block the advertising domain instead of returning its normal public IP address.
+
+## 5. ACTUAL RESULT
+
+IPv4 Response: 0.0.0.0
+
+IPv6 Response: ::
+
+The results confirmed that Pi-hole successfully blocked the domain.
+
+
+## 6. TEST OUTCOME
+
+**Status: PASSED**
+
+The test confirmed that my Pi-hole server was successfully filtering DNS requests and blocking the advertising domain.
+
+This demonstrated that Pi-hole was functioning as intended for the tested domain.

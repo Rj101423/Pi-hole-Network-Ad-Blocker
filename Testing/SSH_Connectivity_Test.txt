@@ -1,0 +1,88 @@
+# SSH CONNECTIVITY TEST
+
+## 1. PURPOSE
+
+The purpose of this test was to verify that I could securely connect to my Ubuntu Server from my Windows PC using SSH.
+
+
+This would allow me to manage my Pi-hole server remotely without physically accessing the laptop.
+
+
+## 2. TEST ENVIRONMENT
+
+Client Operating System: Windows
+
+Server Operating System: Ubuntu Server 26.04.1 LTS
+
+Server Hostname: adblock-server
+
+Server IP Address: 192.168.1.211
+
+SSH Port: 22/TCP
+
+Testing Tools: Windows PowerShell, OpenSSH
+
+
+## 3. TEST PROCEDURE
+
+I opened Windows PowerShell and tested whether my computer could communicate with the Ubuntu server through SSH port 22.
+
+**Command Used:**
+
+`Test-NetConnection 192.168.1.211 -Port 22`
+
+**Actual Result:**
+
+`TcpTestSucceeded : True`
+
+This confirmed that my Windows computer could reach the Ubuntu server through TCP port 22.
+
+Next, I attempted to establish an SSH connection.
+
+**Command Used:**
+
+`ssh serveradmin@192.168.1.211`
+
+During troubleshooting, I also used:
+
+`ssh -vvv serveradmin@192.168.1.211`
+
+The `-vvv` option provided detailed debugging information to help investigate the SSH connection.
+
+
+## 4. EXPECTED RESULT
+
+My Windows computer should successfully establish an SSH connection to the Ubuntu server.
+
+After connecting, I should be able to execute Linux commands remotely.
+
+
+## 5. ACTUAL RESULT
+
+My initial SSH connection attempts experienced timeouts before authentication.
+
+I investigated the SSH service status, verified that the service was listening on port 22, and tested network connectivity.
+
+After troubleshooting, I successfully connected to the Ubuntu server.
+
+To verify the connection, I executed:
+
+`hostname`
+
+**Command Output:**
+
+`adblock-server`
+
+This confirmed that I was remotely executing commands on the correct Ubuntu server.
+
+
+## 6. TEST OUTCOME
+
+**Status: PASSED**
+
+I successfully established an SSH connection from my Windows PC to my Ubuntu server.
+
+The test confirmed that SSH remote administration was functioning and that I could securely execute Linux commands on the server.
+
+This test demonstrated my ability to verify network connectivity, troubleshoot SSH connection issues, and administer a Linux server remotely.
+
